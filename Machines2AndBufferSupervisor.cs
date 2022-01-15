@@ -92,6 +92,57 @@ namespace Controllers.Scenes
             //#########  EVENTLABEL END ############
 
             Console.WriteLine("\nCurrent state is: " + stateLabels[currentState] + "\n");
+            Console.WriteLine("List of active events. Choose one and press enter: "\n");
+            for (int i = 0; i < eventLabels.Count; i++)
+            {
+                if (transiciones.ContainsKey((currentState, i)) && eventLabelsInverse[i].Item2 == "c")
+                {
+                    Console.WriteLine(i + ": " + eventLabelsInverse[i].Item1 + "\n");
+                }
+            }
+            Console.WriteLine("Type event number and press enter to execute or press button on Factory I/O interface:\n");        }
+
+        public bool IsInActiveEvents(int newState)
+        {
+            if (transiciones.ContainsKey((currentState, newState)) && eventLabelsInverse[newState].Item2 == "c")
+            {
+                return (true);
+            }
+            else
+            {
+                return (false);
+            }
+        }
+
+        public void ListOfActiveEvents()
+        {
+            Console.WriteLine("----------------------------------------\n");
+            Console.WriteLine("\nList of active events. Choose one and press enter or wait:\n");
+
+            for (int i = 0; i < eventLabels.Count; i++)
+            {
+                if (transiciones.ContainsKey((currentState, i)) && eventLabelsInverse[i].Item2 == "c")
+                {
+                    Console.WriteLine(i + ": " + eventLabelsInverse[i].Item1);
+                }
+            }
+            Console.WriteLine("\n----------------------------------------");
+        }
+
+        public string StateName(int eventNumber)
+        {
+            if (eventLabelsInverse.ContainsKey(eventNumber))
+            {
+                return (eventLabelsInverse[eventNumber].Item1);
+            }
+            else
+            {
+                Console.WriteLine("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+                Console.WriteLine("\nEvent number pressed does not exist. Try again.\n");
+                Console.WriteLine("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+                ListOfActiveEvents();
+                return ("Event number pressed does not exist");
+            }
         }
 
         public bool On(string eventoLabel)
@@ -102,13 +153,20 @@ namespace Controllers.Scenes
                 currentState = transiciones[(currentState, evento)];
                 if (evento != 0 && evento != 1 && evento != 2 && evento != 3)
                 {
+                    Console.WriteLine("oooooooooooooooooooooooooooooooooooooooo\n");
                     Console.WriteLine(eventoLabel + " event approved");
+                    Console.WriteLine("Current state is: " + stateLabels[currentState]);
+                    Console.WriteLine("\noooooooooooooooooooooooooooooooooooooooo");
+                    ListOfActiveEvents();
                 }
                 else
                 {
+                    Console.WriteLine("oooooooooooooooooooooooooooooooooooooooo\n");
                     Console.WriteLine(eventoLabel + " event is uncontrollable and must be enabled");
+                    Console.WriteLine("Current state is: " + stateLabels[currentState]);
+                    Console.WriteLine("\noooooooooooooooooooooooooooooooooooooooo");
+                    ListOfActiveEvents();
                 }
-                Console.WriteLine("Current state is: " + stateLabels[currentState] + "\n");
                 return true;
             } else
             {

@@ -114,6 +114,61 @@ def xml2sdk(XmlFileName):
     f.write("\n            //#########  EVENTLABEL END ############\n\n")
     stringy = '            Console.WriteLine("' + r'\n' + 'Current state is: " + stateLabels[currentState] + ' + r'"\n"' + ');\n'
     f.write(stringy)
+    stringy = '            Console.WriteLine("' + 'List of active events. Choose one and press enter: "' + r'\n' + '");\n'
+    f.write(stringy)
+    f.write("            for (int i = 0; i < eventLabels.Count; i++)\n")
+    f.write('            {\n')
+    f.write('                if (transiciones.ContainsKey((currentState, i)) && eventLabelsInverse[i].Item2 == "c")\n')
+    f.write('                {\n')
+    stringy = '                    Console.WriteLine(i + ": " + eventLabelsInverse[i].Item1 + "' + r'\n' + '");\n'
+    f.write(stringy)
+    f.write('                }\n')
+    f.write('            }\n')
+    stringy = '            Console.WriteLine("Type event number and press enter to execute or press button on Factory I/O interface:' + r'\n' + '");'
+    f.write(stringy)
+    f.write("        }\n\n")
+    f.write("        public bool IsInActiveEvents(int newState)\n")
+    f.write("        {\n")
+    f.write('            if (transiciones.ContainsKey((currentState, newState)) && eventLabelsInverse[newState].Item2 == "c")\n')
+    f.write('            {\n')
+    f.write('                return (true);\n')
+    f.write('            }\n')
+    f.write('            else\n')
+    f.write('            {\n')
+    f.write('                return (false);\n')
+    f.write('            }\n')
+    f.write("        }\n\n")
+    f.write("        public void ListOfActiveEvents()\n")
+    f.write("        {\n")
+    stringy = '            Console.WriteLine("----------------------------------------' + r'\n' + '");\n'
+    f.write(stringy)
+    stringy = '            Console.WriteLine("' + r'\n' + 'List of active events. Choose one and press enter or wait:' + r'\n' + '");\n\n'
+    f.write(stringy)
+    f.write('            for (int i = 0; i < eventLabels.Count; i++)\n')
+    f.write('            {\n')
+    f.write('                if (transiciones.ContainsKey((currentState, i)) && eventLabelsInverse[i].Item2 == "c")\n')
+    f.write('                {\n')
+    f.write('                    Console.WriteLine(i + ": " + eventLabelsInverse[i].Item1);\n')
+    f.write('                }\n')
+    f.write('            }\n')
+    stringy = '            Console.WriteLine("' + r'\n' + '----------------------------------------");\n'
+    f.write(stringy)
+    f.write("        }\n\n")
+    f.write("        public string StateName(int eventNumber)\n")
+    f.write("        {\n")
+    f.write("            if (eventLabelsInverse.ContainsKey(eventNumber))\n")
+    f.write("            {\n")
+    f.write("                return (eventLabelsInverse[eventNumber].Item1);\n")
+    f.write("            }\n")
+    f.write("            else\n")
+    f.write("            {\n")
+    f.write('                Console.WriteLine("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");\n')
+    stringy = ('                Console.WriteLine("' + r'\n' + 'Event number pressed does not exist. Try again.' + r'\n' + '");\n')
+    f.write(stringy)
+    f.write('                Console.WriteLine("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");\n')
+    f.write('                ListOfActiveEvents();\n')
+    f.write('                return ("Event number pressed does not exist");\n')
+    f.write("            }\n")
     f.write("        }\n\n")
     f.write("        public bool On(string eventoLabel)\n")
     f.write("        {\n")
@@ -131,19 +186,34 @@ def xml2sdk(XmlFileName):
         stringy = stringy + ")\n"
         f.write(stringy)
         f.write('                {\n')
+        stringy = '                    Console.WriteLine("oooooooooooooooooooooooooooooooooooooooo' + r'\n' + '");\n'
+        f.write(stringy)
         f.write('                    Console.WriteLine(eventoLabel + " event approved");\n')
+        f.write('                    Console.WriteLine("Current state is: " + stateLabels[currentState]);\n')
+        stringy = '                    Console.WriteLine("' + r'\n' + 'oooooooooooooooooooooooooooooooooooooooo");\n'
+        f.write(stringy)
+        f.write('                    ListOfActiveEvents();\n')
         f.write('                }\n')
+
         f.write('                else\n')
         f.write('                {\n')
+        stringy = '                    Console.WriteLine("oooooooooooooooooooooooooooooooooooooooo' + r'\n' + '");\n'
+        f.write(stringy)
         f.write('                    Console.WriteLine(eventoLabel + " event is uncontrollable and must be enabled");\n')
+        f.write('                    Console.WriteLine("Current state is: " + stateLabels[currentState]);\n')
+        stringy = '                    Console.WriteLine("' + r'\n' + 'oooooooooooooooooooooooooooooooooooooooo");\n'
+        f.write(stringy)
+        f.write('                    ListOfActiveEvents();\n')
         f.write('                }\n')
     else:
+        stringy = '                    Console.WriteLine("oooooooooooooooooooooooooooooooooooooooo' + r'\n' + '");\n'
+        f.write(stringy)
         f.write('                    Console.WriteLine(eventoLabel + " event approved");\n')
+        f.write('                    Console.WriteLine("Current state is: " + stateLabels[currentState]);\n')
+        stringy = '                    Console.WriteLine("' + r'\n' + 'oooooooooooooooooooooooooooooooooooooooo");\n'
+        f.write(stringy)
+        f.write('                    ListOfActiveEvents();\n')
 
-
-
-    stringy = r'                Console.WriteLine("Current state is: " + stateLabels[currentState] + "\n");'
-    f.write(stringy + '\n')
     f.write('                return true;\n')
     f.write('            } else\n')
     f.write('            {\n')
