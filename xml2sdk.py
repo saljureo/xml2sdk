@@ -86,6 +86,12 @@ def xml2sdk(XmlFileName):
         AddString ='            ' + 'transiciones.Add((' + transition["source"] + ', ' + transition["event"] + '), ' + transition["dest"] + ');\n'
         f.write(AddString)
     f.write("\n            //#########  TRANSICIONES END ############\n\n")
+    f.write("\n            //#########  STATELABEL START ############\n\n")
+    for state in states:
+        AddString = '            ' + 'stateLabels.Add(' + state["id"] + ', "' + state["name"] + '");\n'
+        f.write(AddString)
+
+    f.write("\n            //#########  STATELABEL END ############\n\n")
     f.write("            //#########  EVENTLABEL START ############\n\n")
 
     for event in events:    
@@ -96,13 +102,16 @@ def xml2sdk(XmlFileName):
             noncontrollableEvents.append(event["id"])
         except:
             continue
+    f.write("\n")
+    for event in events:    
+        try:
+            event["controllable"]
+            AddString = '            ' + 'eventLabelsInverse.Add(' + event["id"] + ', ("' + event["label"] + '", "nc"));\n'
+            f.write(AddString)
+        except:
+            AddString = '            ' + 'eventLabelsInverse.Add(' + event["id"] + ', ("' + event["label"] + '", "c"));\n'
+            f.write(AddString)
     f.write("\n            //#########  EVENTLABEL END ############\n\n")
-    f.write("\n            //#########  STATELABEL START ############\n\n")
-    for state in states:
-        AddString = '            ' + 'stateLabels.Add(' + state["id"] + ', "' + state["name"] + '");\n'
-        f.write(AddString)
-
-    f.write("\n            //#########  STATELABEL END ############\n\n")
     stringy = '            Console.WriteLine("' + r'\n' + 'Current state is: " + stateLabels[currentState] + ' + r'"\n"' + ');\n'
     f.write(stringy)
     f.write("        }\n\n")

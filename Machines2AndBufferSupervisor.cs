@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace Controllers.Scenes
 {
-    class Machines2AndBufferSupervisor
+    class Machines2AndBuffer.Supervisor
     {
 
         // #### VARIABLE CREATION TO ALLOCATE IN MEMORY ####
@@ -51,19 +51,6 @@ namespace Controllers.Scenes
 
             //#########  TRANSICIONES END ############
 
-            //#########  EVENTLABEL START ############
-
-            eventLabels.Add("b1", 0);
-            eventLabels.Add("b2", 1);
-            eventLabels.Add("f1", 2);
-            eventLabels.Add("f2", 3);
-            eventLabels.Add("r1", 4);
-            eventLabels.Add("r2", 5);
-            eventLabels.Add("s1", 6);
-            eventLabels.Add("s2", 7);
-
-            //#########  EVENTLABEL END ############
-
 
             //#########  STATELABEL START ############
 
@@ -81,6 +68,28 @@ namespace Controllers.Scenes
             stateLabels.Add(11, "w1.w2.EmptyB1.OK2");
 
             //#########  STATELABEL END ############
+
+            //#########  EVENTLABEL START ############
+
+            eventLabels.Add("b1", 0);
+            eventLabels.Add("b2", 1);
+            eventLabels.Add("f1", 2);
+            eventLabels.Add("f2", 3);
+            eventLabels.Add("r1", 4);
+            eventLabels.Add("r2", 5);
+            eventLabels.Add("s1", 6);
+            eventLabels.Add("s2", 7);
+
+            eventLabelsInverse.Add(0, ("b1", "nc"));
+            eventLabelsInverse.Add(1, ("b2", "nc"));
+            eventLabelsInverse.Add(2, ("f1", "nc"));
+            eventLabelsInverse.Add(3, ("f2", "nc"));
+            eventLabelsInverse.Add(4, ("r1", "c"));
+            eventLabelsInverse.Add(5, ("r2", "c"));
+            eventLabelsInverse.Add(6, ("s1", "c"));
+            eventLabelsInverse.Add(7, ("s2", "c"));
+
+            //#########  EVENTLABEL END ############
 
             Console.WriteLine("\nCurrent state is: " + stateLabels[currentState] + "\n");
         }
