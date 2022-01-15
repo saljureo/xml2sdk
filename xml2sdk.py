@@ -42,13 +42,13 @@ def xml2sdk(XmlFileName):
         
     factoryIoFileName = ''    
     for letter in XmlFileName:
-        factoryIoFileName = factoryIoFileName + letter
         if letter == "/":
             factoryIoFileName = ''
         elif letter == ".":
             break
         else:
-            csFileName = factoryIoFileName + 'Supervisor.cs'
+            factoryIoFileName = factoryIoFileName + letter
+    csFileName = factoryIoFileName + 'Supervisor.cs'
     try:
         f = open(csFileName, "x")
     except:
@@ -71,11 +71,13 @@ def xml2sdk(XmlFileName):
     f.write("        private int evento;\n")
     f.write("        private Dictionary<(int, int), int> transiciones;\n")
     f.write("        private Dictionary<string, int> eventLabels;\n\n")
+    f.write("        private Dictionary<int, (string, string)> eventLabelsInverse;\n\n")
     f.write("        private Dictionary<int, string> stateLabels;\n\n")
     f.write("        public void CreateController()\n")
     f.write("        {\n")
     f.write("            transiciones = new Dictionary<(int, int), int>();\n")
     f.write("            eventLabels = new Dictionary<string, int>();\n")
+    f.write("            eventLabelsInverse = new Dictionary<int, (string, string)>();\n")
     f.write("            stateLabels = new Dictionary<int, string>();\n\n")
 
     f.write("            currentState = " + initialState + ";\n") 
@@ -114,7 +116,7 @@ def xml2sdk(XmlFileName):
     f.write("\n            //#########  EVENTLABEL END ############\n\n")
     stringy = '            Console.WriteLine("' + r'\n' + 'Current state is: " + stateLabels[currentState] + ' + r'"\n"' + ');\n'
     f.write(stringy)
-    stringy = '            Console.WriteLine("' + 'List of active events. Choose one and press enter: "' + r'\n' + '");\n'
+    stringy = '            Console.WriteLine("' + 'List of active events. Choose one and press enter: ' + r'\n' + '");\n'
     f.write(stringy)
     f.write("            for (int i = 0; i < eventLabels.Count; i++)\n")
     f.write('            {\n')
