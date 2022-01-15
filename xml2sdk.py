@@ -144,7 +144,7 @@ def xml2sdk(XmlFileName):
     f.write("        {\n")
     stringy = '            Console.WriteLine("----------------------------------------' + r'\n' + '");\n'
     f.write(stringy)
-    stringy = '            Console.WriteLine("' + r'\n' + 'List of active events. Choose one and press enter or wait:' + r'\n' + '");\n\n'
+    stringy = '            Console.WriteLine("' + 'List of active events. Choose one and press enter or wait:' + r'\n' + '");\n\n'
     f.write(stringy)
     f.write('            for (int i = 0; i < eventLabels.Count; i++)\n')
     f.write('            {\n')
